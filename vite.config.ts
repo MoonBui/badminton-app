@@ -5,7 +5,7 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   server: {
-    hot: true, // Enable hot refresh
+    host: true, // Enable host refresh
     watch: {
       usePolling: true // This might be needed in some environments
     }

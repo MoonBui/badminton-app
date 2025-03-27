@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
-import { Player } from './usePlayers';
+import { Player } from '../types/Player';
 import { SkillLevel } from '../types/SkillLevel';
+
+
 export function usePlayerEntry(
   player: Player,
   onChange: (player: Player) => void,

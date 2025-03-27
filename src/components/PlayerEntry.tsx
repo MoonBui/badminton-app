@@ -2,7 +2,7 @@ import React from 'react';
 import { TextField, IconButton } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import SkillLevelMenu from './SkillLevelMenu';
-import { Player } from '../hooks/usePlayers';
+import { Player } from '../types/Player';
 import { usePlayerEntry } from '../hooks/usePlayerEntry';
 
 interface PlayerEntryProps {

@@ -1,10 +1,6 @@
 import { useState } from 'react';
 import { SkillLevel } from '../types/SkillLevel';
-export interface Player {
-  id: string;
-  name: string;
-  skillLevel: SkillLevel;
-}
+import { Player } from '../types/Player';
 
 export function usePlayers(initialCount = 1) {
   // Initialize state with the specified number of players

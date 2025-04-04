@@ -7,6 +7,7 @@ export function useMatchEntry(
     match: Match,
     players: Player[],
     addMatch: () => void,
+    removeMatch: (id: string) => void,
     // onChange: (match: Match) => void,
 
     // onRemove: (match: Match) => void
@@ -32,9 +33,18 @@ export function useMatchEntry(
         // onChange(match)
     }
 
+    const handleMatchRemove = async () => {
+        try {
+            await removeMatch(match.id)
+        } catch (error) {
+            console.error('Error removing match:', error)
+        }
+    }
+
     
     return {
         handleMatchAdd,
-        handleMatchChange
+        handleMatchChange,
+        handleMatchRemove
     }
 }

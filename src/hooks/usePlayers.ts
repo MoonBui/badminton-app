@@ -17,12 +17,11 @@ export function usePlayers() {
       try {
         setLoading(true);
         const data = await getPlayers();
-        setPlayers(data.length > 0 ? data : [{ id: '1', name: '', skillLevel: SkillLevel.Beginner }]);
+        setPlayers(data);
         setError(null);
       } catch (err) {
         setError(err instanceof Error ? err : new Error('Unknown error'));
-        // Fallback to local state if API fails
-        setPlayers([{ id: '1', name: '', skillLevel: SkillLevel.Beginner }]);
+        setPlayers([]);
       } finally {
         setLoading(false);
       }

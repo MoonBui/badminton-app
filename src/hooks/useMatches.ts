@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Match } from '../types/Match';
-import { getMatches, createMatch as createMatchApi } from '../services/matchService';
+import { getMatches, createMatch as createMatchApi, deleteMatch } from '../services/matchService';
 
 export function useMatches(initialCount = 1) {
   const [matches, setMatches] = useState<Match[]>([]);
@@ -45,8 +45,13 @@ export function useMatches(initialCount = 1) {
   };
 
   // Handler to remove a match
-  const removeMatch = (id: string) => {
-    setMatches(matches.filter(match => match.id !== id));
+  const removeMatch = async (id: string) => {
+    try {
+      await deleteMatch(id);
+      setMatches(matches.filter(match => match.id !== id));
+    } catch (err) {
+      setError(err instanceof Error ? err : new Error('Failed to remove match'));
+    }
   };
 
   return {

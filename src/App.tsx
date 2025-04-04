@@ -7,6 +7,7 @@ import Loading from './components/Loading/Loading'
 const Home = lazy(() => import('./pages/Home'))
 const About = lazy(() => import('./pages/About'))
 const Contact = lazy(() => import('./pages/Contact'))
+const Matches = lazy(() => import('./pages/Matches'))
 const NotFound = lazy(() => import('./pages/NotFound'))
 
 function App() {
@@ -15,7 +16,7 @@ function App() {
       <div className="min-h-screen flex flex-col">
         <header className="bg-white shadow">
           <div className="max-w-7xl mx-auto px-4 py-6 sm:px-6 lg:px-8">
-            <h1 className="text-3xl font-bold text-gray-900">
+            <h1 className="text-3xl mb-8 font-bold text-gray-900">
               Badminton Match Making
             </h1>
             <Navigation />
@@ -28,6 +29,7 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/about" element={<About />} />
               <Route path="/contact" element={<Contact />} />
+              <Route path="/matches" element={<Matches />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Suspense>

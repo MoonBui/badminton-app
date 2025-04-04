@@ -28,6 +28,14 @@ function Navigation() {
             Contact
           </Link>
         </li>
+        <li>
+          <Link 
+            to="/matches" 
+            className="text-gray-700 hover:text-indigo-600 font-medium"
+          >
+            Matches
+          </Link>
+        </li>
       </ul>
     </nav>
   )

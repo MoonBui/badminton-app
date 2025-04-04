@@ -58,6 +58,19 @@ export async function createMatch(): Promise<Match> {
     }
 }
 
+export async function deleteMatch(id: string): Promise<void> {
+    try {
+        const matches = await getMatches();
+        const index = matches.findIndex(match => match.id === id);
+        if (index !== -1) {
+            matches.splice(index, 1);
+            await saveMatches(matches);
+        }
+    } catch (error) {
+        console.error('Error deleting match:', error);
+        throw error;
+    }
+}
 
     
     

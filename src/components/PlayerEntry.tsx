@@ -19,7 +19,7 @@ const PlayerEntry: React.FC<PlayerEntryProps> = ({ player, onChange, onRemove, s
     <div className="w-full flex flex-row gap-4 mb-4">
       <TextField 
         id={`player-${player.id}`} 
-        label={`Player ${player.id}`} 
+        label={`Player name`} 
         variant="outlined" 
         className="w-96"
         value={localName}

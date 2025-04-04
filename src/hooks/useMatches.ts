@@ -1,17 +1,31 @@
-import { useState } from 'react';
-import { SkillLevel } from '../types/SkillLevel';
-import { Match, createMatch } from '../types/Match';
+import { useState, useEffect } from 'react';
+import { Match } from '../types/Match';
+import { getMatches, createMatch as createMatchApi } from '../services/matchService';
 
 export function useMatches(initialCount = 1) {
-  // Initialize state with the specified number of players
-  const [matches, setMatches] = useState<Match[]>(
-    Array.from({ length: initialCount }, (_, i) => createMatch([
-      { id: (i + 1).toString(), name: '', skillLevel: SkillLevel.Beginner },
-      { id: (i + 2).toString(), name: '', skillLevel: SkillLevel.Beginner },
-      { id: (i + 3).toString(), name: '', skillLevel: SkillLevel.Beginner },
-      { id: (i + 4).toString(), name: '', skillLevel: SkillLevel.Beginner }
-    ]))
-  );
+  const [matches, setMatches] = useState<Match[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<Error | null>(null);
+
+  // Load matches from API on component mount
+  useEffect(() => {
+    const fetchMatches = async () => {
+      try {
+        setLoading(true);
+        const data = await getMatches();
+        setMatches(data.length > 0 ? data : []);
+        setError(null);
+      } catch (err) {
+        setError(err instanceof Error ? err : new Error('Unknown error'));
+        // Fallback to local state if API fails
+        setMatches([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchMatches();
+  }, []);
 
   // Handler to update a specific match
   const updateMatch = (updatedMatch: Match) => {
@@ -21,13 +35,13 @@ export function useMatches(initialCount = 1) {
   };
 
   // Handler to add a new match
-  const addMatch = () => {
-      setMatches([...matches, createMatch([
-        { id: (matches.length + 1).toString(), name: '', skillLevel: SkillLevel.Beginner },
-        { id: (matches.length + 2).toString(), name: '', skillLevel: SkillLevel.Beginner },
-        { id: (matches.length + 3).toString(), name: '', skillLevel: SkillLevel.Beginner },
-        { id: (matches.length + 4).toString(), name: '', skillLevel: SkillLevel.Beginner }
-      ])]);
+  const addMatch = async () => {
+    try {
+      const newMatch = await createMatchApi();
+      setMatches([...matches, newMatch]);
+    } catch (err) {
+      setError(err instanceof Error ? err : new Error('Failed to add match'));
+    }
   };
 
   // Handler to remove a match

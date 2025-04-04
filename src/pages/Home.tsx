@@ -34,7 +34,7 @@ function Home() {
             match={match}
             players={players}
             addMatch={addMatch}
-            showAddMatchButton={players.length >= 4}
+            showAddMatchButton={true}
           />
         ))}
       </div>

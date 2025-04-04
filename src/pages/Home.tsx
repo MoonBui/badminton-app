@@ -1,9 +1,12 @@
 // import NameTag from '../components/NameTag'
 import PlayerEntry from '../components/PlayerEntry'
+import MatchEntry from '../components/MatchEntry'
 import { usePlayers } from '../hooks/usePlayers'
+import { useMatches } from '../hooks/useMatches'
 
 function Home() {
   const { players, updatePlayer, addPlayer, isMaxReached, removePlayer } = usePlayers()
+  const { matches, addMatch } = useMatches()
 
   return (
     <div className="prose dark:prose-invert lg:prose-xl">
@@ -12,15 +15,29 @@ function Home() {
         Find your perfect badminton partner and schedule matches with players of your skill level.
       </p>
       
-      {players.map((player) => (
-        <PlayerEntry 
-          key={player.id}
+      <div className="flex flex-col gap-4">
+        {players.map((player) => (
+          <PlayerEntry 
+            key={player.id}
           player={player}
           onChange={updatePlayer}
           onRemove={removePlayer}
           showRemoveButton={players.length > 1}
         />
-      ))}
+        ))}
+      </div>
+
+      <div>
+        {matches.map((match) => (
+          <MatchEntry 
+            key={match.id}
+            match={match}
+            players={players}
+            addMatch={addMatch}
+            showAddMatchButton={players.length >= 4}
+          />
+        ))}
+      </div>
 
       <button 
         className={`${isMaxReached ? 'bg-gray-500' : 'bg-blue-500'} text-white p-2 rounded-md`}
